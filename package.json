@@ -7,9 +7,10 @@
   "author": "rizanw",
   "license": "MIT",
   "scripts": {
-    "start": "live-server --host=0.0.0.0"
+    "start": "live-server --host=0.0.0.0 && aframe-watcher index.html"
   },
-  "devDependencies": { 
+  "devDependencies": {
+    "aframe-watcher": "^1.4.0",
     "live-server": "^1.2.1"
   }
 }
