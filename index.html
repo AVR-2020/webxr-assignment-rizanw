@@ -31,6 +31,7 @@
         <a-mixin
           id="icon"
           geometry="primitive: plane; height: 0.3; width: 0.3"
+          color="white"
           material="color: white;"
           position="0 0.001 0.006"
         ></a-mixin>
@@ -45,25 +46,23 @@
         menu
       >
         <a-entity
-          geometry="depth: 0.010; height: 0.4; width: 0.3"
+          geometry="depth: 0.010; height: 0.31; width: 0.3"
           position="-0.950 0.002 0.009"
-          material="color: red"
           class="button-menu raycastable"
-          event-set__enter="_event: mouseenter; material: color: blue"
         >
           <a-entity mixin="icon" material="src: #icon-menu"></a-entity>
         </a-entity>
 
         <a-entity id="group-button-middle" position="-0.450 0.002 0.009">
           <a-entity
-            geometry="depth: 0.010; height: 0.3; width: 0.3"
+            geometry="depth: 0.010; height: 0.31; width: 0.3"
             position="0 0 0"
             class="button-menu raycastable"
           >
             <a-entity mixin="icon" material="src: #icon-news"></a-entity>
           </a-entity>
           <a-entity
-            geometry="depth: 0.010; height: 0.3; width: 0.3"
+            geometry="depth: 0.010; height: 0.31; width: 0.3"
             position="0.45 0 0"
             class="button-menu raycastable"
           >
@@ -72,14 +71,14 @@
         </a-entity>
         <a-entity id="group-button-right" position="0.500 0.002 0.009">
           <a-entity
-            geometry="depth: 0.010; height: 0.3; width: 0.3"
+            geometry="depth: 0.010; height: 0.31; width: 0.3"
             position="0 0 0"
             class="button-menu raycastable"
           >
             <a-entity mixin="icon" material="src: #icon-notif"></a-entity>
           </a-entity>
           <a-entity
-            geometry="depth: 0.010; height: 0.3; width: 0.3"
+            geometry="depth: 0.010; height: 0.31; width: 0.3"
             position="0.45 0 0"
             class="button-menu raycastable"
           >
