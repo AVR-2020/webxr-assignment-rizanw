@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="./utils/anime.min.js"></script>
-    <script src="./menu.js"></script>
+    <script src="./components/menu.js"></script>
   </head>
   <body>
     <a-scene
@@ -61,6 +61,18 @@
           id="buttonRec"
           src="./assets/3D/buttonRec.gltf"
         ></a-asset-item>
+        <a-asset-item
+          id="iconNews"
+          src="./assets/3D/iconNews.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="iconSearch"
+          src="./assets/3D/iconSearch.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="iconEndowment"
+          src="./assets/3D/iconEndowment.gltf"
+        ></a-asset-item>
 
         <a-mixin
           id="icon"
@@ -85,18 +97,21 @@
       <!-- EOF assets! -->
 
       <!-- Screens! -->
-      <a-entity
-        slice9="width: 2; height: 1; left: 20; right: 43; top: 20; bottom: 43; src: ./assets/tooltip.png"
-        position="0 1 -3.5"
-        rotation=""
-        scale=""
-        visible=""
-      >
+      <a-entity id="screen-menu" position="0 2.8 -5" visible="false">
         <a-entity
-          id="textHello"
-          visible="false"
-          text="value: Life so sad!; color: white; wrapCount: 11; align: center; negate: false"
-          position="0 0 0.01402"
+          gltf-model="#iconNews"
+          rotation="90 45 45"
+          position="-3 1 0"
+        ></a-entity>
+        <a-entity
+          gltf-model="#iconEndowment"
+          rotation="90 45 45"
+          position="0 1 0"
+        ></a-entity>
+        <a-entity
+          gltf-model="#iconSearch"
+          rotation="0 0 0"
+          position="3 1 0"
         ></a-entity>
       </a-entity>
 
@@ -109,6 +124,7 @@
         menu
       >
         <a-entity
+          id="menu"
           mixin="nav-button"
           class="button-nav raycastable"
           position="0.070 0.170 0"
@@ -122,6 +138,7 @@
           <a-entity mixin="nav-indicator"></a-entity>
         </a-entity>
         <a-entity
+          id="notif"
           mixin="nav-button"
           class="button-nav raycastable"
           position="0.070 0.170 3"
@@ -135,6 +152,7 @@
           <a-entity mixin="nav-indicator"></a-entity>
         </a-entity>
         <a-entity
+          id="profile"
           mixin="nav-button"
           class="button-nav raycastable"
           position="0.070 0.170 5.5"
@@ -148,6 +166,7 @@
           <a-entity mixin="nav-indicator"></a-entity>
         </a-entity>
         <a-entity
+          id="news"
           mixin="nav-button"
           class="button-nav raycastable"
           position="0.070 0.170 -3"
@@ -161,6 +180,7 @@
           <a-entity mixin="nav-indicator"></a-entity>
         </a-entity>
         <a-entity
+          id="search"
           mixin="nav-button"
           class="button-nav raycastable"
           position="0.070 0.170 -5.5"
