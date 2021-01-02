@@ -1,4 +1,4 @@
-AFRAME.registerComponent("menu", {
+AFRAME.registerComponent("navigation", {
   schema: {},
 
   init: function () {
@@ -12,7 +12,6 @@ AFRAME.registerComponent("menu", {
       buttonEls[i].addEventListener("mouseenter", this.onMouseEnter);
       buttonEls[i].addEventListener("mouseleave", this.onMouseLeave);
       buttonEls[i].addEventListener("click", this.onClick);
-      buttonEls[i].setAttribute("clicked", 0);
     }
   },
 
@@ -49,26 +48,28 @@ AFRAME.registerComponent("menu", {
     // button indicator reset
     var buttonEls = this.buttonEls;
     for (var i = 0; i < buttonEls.length; ++i) {
-      buttonEls[i].lastElementChild.setAttribute(
-        "material",
-        "color",
-        "#013880"
-      );
+      if (buttonEls[i].id != evt.target.id) {
+        buttonEls[i].lastElementChild.setAttribute(
+          "material",
+          "color",
+          "#013880"
+        );
+      }
     }
+    var btnIndicator = evt.target.lastElementChild.getAttribute("material")
+      .color;
+    var isClicked = btnIndicator == "#013880" ? true : false;
 
     // button indicator color
-    var isCicked = evt.target.getAttribute("clicked");
-    if (isCicked == "1") {
+    if (!isClicked) {
       evt.target.lastElementChild.setAttribute("material", "color", "#013880");
-      evt.target.setAttribute("clicked", 0);
     } else {
       evt.target.lastElementChild.setAttribute("material", "color", "#FEC410");
-      evt.target.setAttribute("clicked", 1);
     }
 
     // menu changes
     var selectedMenu = evt.target.id;
-    if (selectedMenu == "menu" && isCicked == "1") {
+    if (selectedMenu == "menu" && isClicked) {
       document.querySelector("#screen-menu").setAttribute("visible", true);
     } else {
       document.querySelector("#screen-menu").setAttribute("visible", false);
@@ -88,9 +89,5 @@ AFRAME.registerComponent("menu", {
       return;
     }
     evt.target.firstElementChild.object3D.scale.set(1.0, 1.0, 1.0);
-  },
-
-  onMenuButtonClick: function (evt) {
-    console.log("cilcked no: " + evt.currentTarget.id);
   },
 });

@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="./utils/anime.min.js"></script>
-    <script src="./components/menu.js"></script>
+    <script src="./components/navigation.js"></script>
   </head>
   <body>
     <a-scene
@@ -99,16 +99,19 @@
       <!-- Screens! -->
       <a-entity id="screen-menu" position="0 2.8 -5" visible="false">
         <a-entity
+          class="raycastable button-menu"
           gltf-model="#iconNews"
           rotation="90 45 45"
           position="-3 1 0"
         ></a-entity>
         <a-entity
+          class="raycastable button-menu"
           gltf-model="#iconEndowment"
           rotation="90 45 45"
           position="0 1 0"
         ></a-entity>
         <a-entity
+          class="raycastable button-menu"
           gltf-model="#iconSearch"
           rotation="0 0 0"
           position="3 1 0"
@@ -121,7 +124,7 @@
         position="0 -0.25 -2.50"
         rotation="0 90 45"
         scale="0.3 0.3 0.3"
-        menu
+        navigation
       >
         <a-entity
           id="menu"
