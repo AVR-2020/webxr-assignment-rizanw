@@ -13,6 +13,8 @@ AFRAME.registerComponent("navigation", {
       buttonEls[i].addEventListener("mouseleave", this.onMouseLeave);
       buttonEls[i].addEventListener("click", this.onClick);
     }
+
+    document.querySelector("#screen-menu").object3D.visible = false;
   },
 
   onClick: function (evt) {
@@ -70,9 +72,18 @@ AFRAME.registerComponent("navigation", {
     // menu changes
     var selectedMenu = evt.target.id;
     if (selectedMenu == "menu" && isClicked) {
-      document.querySelector("#screen-menu").setAttribute("visible", true);
+      document.querySelector("#screen-menu").object3D.visible = true;
+      this.raycasterToggle(".button-menu", "raycastable");
     } else {
-      document.querySelector("#screen-menu").setAttribute("visible", false);
+      document.querySelector("#screen-menu").object3D.visible = false;
+      this.raycasterToggle(".button-menu", "raycastable");
+    }
+  },
+
+  raycasterToggle: function (it, st) {
+    cl = document.querySelectorAll(it);
+    for (var i = 0; i < cl.length; ++i) {
+      cl[i].classList.toggle(st);
     }
   },
 

@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="./utils/anime.min.js"></script>
     <script src="./components/navigation.js"></script>
+    <script src="./components/screens/menu.js"></script>
   </head>
   <body>
     <a-scene
@@ -75,6 +76,15 @@
         ></a-asset-item>
 
         <a-mixin
+          id="hoverAnimation"
+          animation="property: object3D.position.y; from: 1.6; to: 1.8; dir: alternate; loop: true; dur: 2000; easing: easeInOutCubic; pauseEvents: touched"
+        ></a-mixin>
+        <a-mixin
+          id="selectAnimation"
+          animation="property: object3D.rotation.y; from: 0; to: 90; dir: alternate; loop: true; dur: 3000; easing: easeInOutCubic; pauseEvents: touched"
+        ></a-mixin>
+
+        <a-mixin
           id="icon"
           geometry="primitive: plane; height: 1.0; width: 1.0"
           color="white"
@@ -97,23 +107,30 @@
       <!-- EOF assets! -->
 
       <!-- Screens! -->
-      <a-entity id="screen-menu" position="0 2.8 -5" visible="false">
+      <a-entity
+        id="screen-menu"
+        position="0 2.8 -5" 
+        screen-menu
+      >
         <a-entity
-          class="raycastable button-menu"
+          mixin="hoverAnimation"
+          class="button-menu"
           gltf-model="#iconNews"
           rotation="90 45 45"
           position="-3 1 0"
         ></a-entity>
         <a-entity
-          class="raycastable button-menu"
+          mixin="hoverAnimation"
+          class="button-menu"
           gltf-model="#iconEndowment"
           rotation="90 45 45"
           position="0 1 0"
         ></a-entity>
         <a-entity
-          class="raycastable button-menu"
+          mixin="hoverAnimation"
+          class="button-menu"
           gltf-model="#iconSearch"
-          rotation="0 0 0"
+          rotation="90 45 45"
           position="3 1 0"
         ></a-entity>
       </a-entity>
