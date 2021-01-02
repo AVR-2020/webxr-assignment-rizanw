@@ -15,6 +15,7 @@ AFRAME.registerComponent("navigation", {
     }
 
     document.querySelector("#screen-menu").object3D.visible = false;
+    document.querySelector("#screen-profile").object3D.visible = false;
   },
 
   onClick: function (evt) {
@@ -50,7 +51,11 @@ AFRAME.registerComponent("navigation", {
     // button indicator reset
     var buttonEls = this.buttonEls;
     for (var i = 0; i < buttonEls.length; ++i) {
-      if (buttonEls[i].id != evt.target.id) {
+      if (
+        buttonEls[i].id != evt.target.id &&
+        buttonEls[i].id != "profile" &&
+        buttonEls[i].id != "notif"
+      ) {
         buttonEls[i].lastElementChild.setAttribute(
           "material",
           "color",
@@ -77,6 +82,13 @@ AFRAME.registerComponent("navigation", {
     } else {
       document.querySelector("#screen-menu").object3D.visible = false;
       this.raycasterToggle(".button-menu", "raycastable");
+      if (selectedMenu == "profile" && isClicked) {
+        document.querySelector("#screen-profile").object3D.visible = true;
+      } else if (selectedMenu == "profile" && !isClicked) {
+        document.querySelector("#screen-profile").object3D.visible = false;
+      } else if (selectedMenu == "notif" && isClicked) {
+      } else if (selectedMenu == "notif" && !isClicked) {
+      }
     }
   },
 

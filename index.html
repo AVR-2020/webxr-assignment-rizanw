@@ -26,8 +26,12 @@
       <!-- lighting! -->
       <a-entity light="type: ambient; color: #BBB"></a-entity>
       <a-entity
-        light="type: directional; color: #FFF; intensity: 0.6"
-        position="0 1 1"
+        light="type: directional; color: #EEE; intensity: 0.6"
+        position="0 -0.4 1"
+      ></a-entity>
+      <a-entity
+        light="type: point; intensity: 0.4; distance: 40; decay: 2"
+        position="0 10 10"
       ></a-entity>
 
       <!-- Leser controls -->
@@ -107,11 +111,7 @@
       <!-- EOF assets! -->
 
       <!-- Screens! -->
-      <a-entity
-        id="screen-menu"
-        position="0 2.8 -5" 
-        screen-menu
-      >
+      <a-entity id="screen-menu" position="0 2.8 -5" screen-menu>
         <a-entity
           mixin="hoverAnimation"
           class="button-menu"
@@ -132,6 +132,34 @@
           gltf-model="#iconSearch"
           rotation="90 45 45"
           position="3 1 0"
+        ></a-entity>
+      </a-entity>
+      <a-entity
+        id="screen-profile"
+        geometry="primitive: box; width: 4; height: 5; depth: 0.4"
+        rotation="0 -60 0"
+        position="5.5 2.5 -1.8"
+        ><a-entity
+          geometry="primitive: cylinder; height: 0.2; radius: 0.6"
+          position="-1.5 2.0 0.3"
+          rotation="90 0 0"
+          material="color: #262626"
+        >
+          <a-gltf-model
+            scale="0.1 0.1 0.1"
+            rotation="-85 -35 35"
+            position="0 0 0.60"
+            src="./assets/3D/DeathTrooper.gltf"
+            gltf-model="./assets/3D/DeathTrooper.gltf"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity
+          position="-0.7 2.2 0.2"
+          text="value: Rizky Andre Wibisono; color: #000000; width: 5; anchor: left"
+        ></a-entity>
+        <a-entity
+          position="-0.7 1.9 0.2"
+          text="value: Teknik Informatika-2017; color: #000000; width: 3; anchor: left"
         ></a-entity>
       </a-entity>
 
