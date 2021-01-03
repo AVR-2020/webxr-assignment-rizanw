@@ -13,6 +13,7 @@
     <script src="./utils/aframe-keyboard.min.js"></script>
     <script src="./components/screens/menu.js"></script>
     <script src="./components/navigation.js"></script>
+    <script src="./components/numpad.js"></script>
   </head>
   <body>
     <a-scene
@@ -68,6 +69,10 @@
           src="./assets/3D/buttonRec.gltf"
         ></a-asset-item>
         <a-asset-item
+          id="buttonRecBlue"
+          src="./assets/3D/buttonRecBlue.gltf"
+        ></a-asset-item>
+        <a-asset-item
           id="iconNews"
           src="./assets/3D/iconNews.gltf"
         ></a-asset-item>
@@ -115,8 +120,19 @@
           geometry="primitive: box; height: 2; width: 4; depth: 0.2"
           material="color: #111"
         ></a-mixin>
+        <a-mixin
+          id="metode-card"
+          geometry="primitive: box; height: 1.2; width: 2.2; depth: 0.2"
+          material="color: #fff"
+        ></a-mixin>
 
         <!-- nav mixin -->
+        <a-mixin
+          id="num-button"
+          gltf-model="#buttonRec"
+          rotation="90 0 0"
+          scale="0.4 0.4 0.4"
+        ></a-mixin>
         <a-mixin
           id="nav-button"
           gltf-model="#buttonRec"
@@ -257,7 +273,7 @@
         </a-entity>
       </a-entity>
       <a-entity id="screen-search" position="0 2.8 -5">
-        <a-entity gltf-model="#spotlight" position="0 1 0">
+        <a-entity gltf-model="#spotlight" position="0 1.5 0">
           <a-entity
             mixin="icon"
             material="src: #icon-search; alphaTest: 0.5"
@@ -272,7 +288,153 @@
             position="-3.2 0 0.02"
           ></a-text>
         </a-entity>
-        <a-entity id="keyboard" position="-2 -1 0" scale="10 10 10" a-keyboard>
+        <a-entity id="keyboard" position="-2.5 -0.2 0" scale="10 10 10" a-keyboard>
+        </a-entity>
+      </a-entity>
+      <a-entity id="screen-endowment" position="0 3.45 -5">
+        <a-entity id="metode">
+          <a-entity mixin="metode-card" position="-2.4 1.2 0">
+            <a-image
+              src="./assets/img/bank-transfer.png"
+              position="0 0 0.2"
+              scale="2 1 1"
+            ></a-image>
+          </a-entity>
+          <a-entity mixin="metode-card" position="0 1.2 0">
+            <a-image
+              src="./assets/img/virtual-account.png"
+              material=""
+              geometry=""
+              position="0 0 0.2"
+              scale="1.8 0.8 0.8"
+            ></a-image>
+          </a-entity>
+          <a-entity mixin="metode-card" position="2.4 1.2 0">
+            <a-image
+              src="./assets/img/ewallet.jpg" 
+              position="0 0.2 0.2"
+              scale="1 0.4 0.4"
+            ></a-image>
+            <a-text value="e-Wallet" color="black" position="0 -0.2 0.2" align="center"></a-text>
+          </a-entity>
+        </a-entity>
+        <a-entity
+          id="fund"
+          geometry="primitive: box; height: 1.2; width: 4; depth: 0.2"
+          position="-1.5 -0.2 0"
+        >
+          <a-text
+            anchor="left"
+            color="#000"
+            width="10"
+            position="-1.8 0 0.2"
+            value="Rp "
+          ></a-text>
+          <a-text
+            id="input-numpad"
+            color="#000"
+            width="10"
+            position="-1.2 0 0.2"
+            value="0"
+          ></a-text>
+        </a-entity>
+        <a-entity
+          gltf-model="#buttonRecBlue"
+          scale="1 0.4 0.4"
+          position="-0.5 -1.4 0"
+        >
+          <a-text
+            value="Donasi"
+            width="8"
+            position="0 0 0.26"
+            align="center"
+            scale="1 2 1"
+          ></a-text>
+        </a-entity>
+        <a-entity id="numpad" position="1.1 0 0" numpad>
+          <a-entity mixin="num-button" id="num-7">
+            <a-entity
+              text="value: 7; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="1 0 0" id="num-8">
+            <a-entity
+              text="value: 8; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="2 0 0" id="num-9">
+            <a-entity
+              text="value: 9; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="0 -1 0" id="num-4">
+            <a-entity
+              text="value: 4; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="1 -1 0" id="num-5">
+            <a-entity
+              text="value: 5; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="2 -1 0" id="num-6">
+            <a-entity
+              text="value: 6; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="0 -2 0" id="num-1">
+            <a-entity
+              text="value: 1; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="1 -2 0" id="num-2">
+            <a-entity
+              text="value: 2; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="2 -2 0" id="num-3">
+            <a-entity
+              text="value: 3; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity
+            mixin="num-button"
+            position="0.55 -3 0"
+            scale="0.85 0.4 0.4"
+            id="num-0"
+          >
+            <a-entity
+              text="value: 0; width: 16; color: black; anchor: left"
+              scale="0.6 1 1"
+              rotation="-90 0 0"
+              position="-0.184 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="2 -3 0" id="num-del">
+            <a-entity
+              text="value: del; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
         </a-entity>
       </a-entity>
 
@@ -384,6 +546,10 @@
         document.querySelector("#input").setAttribute("value", input + "_");
       }
       document.addEventListener("a-keyboard-update", updateInput);
+    </script>
+    <script>
+      var screen = document.querySelector("#screen-endowment").visible;
+      console.log(screen);
     </script>
   </body>
 </html>

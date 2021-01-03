@@ -19,7 +19,9 @@ AFRAME.registerComponent("navigation", {
     document.querySelector("#screen-notif").object3D.visible = false;
     document.querySelector("#screen-news").object3D.visible = false;
     document.querySelector("#screen-search").object3D.visible = false;
+    document.querySelector("#screen-endowment").object3D.visible = false;
     this.raycasterToggle("#keyboard", 0);
+    this.raycasterToggle("#numpad", 0);
   },
 
   onClick: function (evt) {
@@ -93,26 +95,34 @@ AFRAME.registerComponent("navigation", {
         document.querySelector("#screen-news").object3D.visible = false;
         document.querySelector("#screen-search").object3D.visible = false;
         document.querySelector("#screen-menu").object3D.visible = true;
+        document.querySelector("#screen-endowment").object3D.visible = false;
         this.raycasterToggle(".button-menu", 1);
         this.raycasterToggle("#keyboard", 0);
+        this.raycasterToggle("#numpad", 0);
       } else if (selectedMenu == "news" && isClicked) {
         document.querySelector("#screen-menu").object3D.visible = false;
         document.querySelector("#screen-search").object3D.visible = false;
         document.querySelector("#screen-news").object3D.visible = true;
+        document.querySelector("#screen-endowment").object3D.visible = false;
         this.raycasterToggle(".button-menu", 0);
         this.raycasterToggle("#keyboard", 0);
+        this.raycasterToggle("#numpad", 0);
       } else if (selectedMenu == "search" && isClicked) {
         document.querySelector("#screen-menu").object3D.visible = false;
         document.querySelector("#screen-news").object3D.visible = false;
         document.querySelector("#screen-search").object3D.visible = true;
+        document.querySelector("#screen-endowment").object3D.visible = false;
         this.raycasterToggle(".button-menu", 0);
         this.raycasterToggle("#keyboard", 1);
+        this.raycasterToggle("#numpad", 0);
       } else {
         document.querySelector("#screen-menu").object3D.visible = false;
         document.querySelector("#screen-news").object3D.visible = false;
         document.querySelector("#screen-search").object3D.visible = false;
+        document.querySelector("#screen-endowment").object3D.visible = false;
         this.raycasterToggle(".button-menu", 0);
         this.raycasterToggle("#keyboard", 0);
+        this.raycasterToggle("#numpad", 0);
       }
     }
   },
@@ -125,6 +135,14 @@ AFRAME.registerComponent("navigation", {
           cl[0].children[i].children[1].classList.add("raycastable");
         } else {
           cl[0].children[i].children[1].classList.remove("raycastable");
+        }
+      }
+    } else if (it == "#numpad") {
+      for (var i = 1; i < cl[0].children.length; ++i) {
+        if (st) {
+          cl[0].children[i].classList.add("raycastable");
+        } else {
+          cl[0].children[i].classList.remove("raycastable");
         }
       }
     } else {

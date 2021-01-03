@@ -26,32 +26,49 @@ AFRAME.registerComponent("screen-menu", {
     evt.target.setAttribute("mixin", "hoverAnimation");
 
     // var isClicked = btnIndicator == "#013880" ? true : false;
+    var btnIndicator = document
+      .querySelector("#menu")
+      .lastElementChild.setAttribute("material", "color", "#013880");
 
     var selectedMenu = evt.target.id;
     if (selectedMenu == "menu-news") {
       document.querySelector("#screen-menu").object3D.visible = false;
       document.querySelector("#screen-news").object3D.visible = true;
+      document.querySelector("#screen-endowment").object3D.visible = false;
       document.querySelector("#screen-search").object3D.visible = false;
       this.raycasterToggle(".button-menu", 1);
       this.raycasterToggle("#keyboard", 0);
+      this.raycasterToggle("#numpad", 0);
+      document
+        .querySelector("#news")
+        .lastElementChild.setAttribute("material", "color", "#FEC410");
     } else if (selectedMenu == "menu-endowment") {
       document.querySelector("#screen-menu").object3D.visible = false;
       document.querySelector("#screen-news").object3D.visible = false;
+      document.querySelector("#screen-endowment").object3D.visible = true;
       document.querySelector("#screen-search").object3D.visible = false;
       this.raycasterToggle(".button-menu", 0);
       this.raycasterToggle("#keyboard", 0);
+      this.raycasterToggle("#numpad", 1);
     } else if (selectedMenu == "menu-search") {
       document.querySelector("#screen-menu").object3D.visible = false;
       document.querySelector("#screen-news").object3D.visible = false;
+      document.querySelector("#screen-endowment").object3D.visible = false;
       document.querySelector("#screen-search").object3D.visible = true;
       this.raycasterToggle(".button-menu", 0);
       this.raycasterToggle("#keyboard", 1);
+      this.raycasterToggle("#numpad", 0);
+      document
+        .querySelector("#search")
+        .lastElementChild.setAttribute("material", "color", "#FEC410");
     } else {
       document.querySelector("#screen-menu").object3D.visible = false;
       document.querySelector("#screen-news").object3D.visible = false;
+      document.querySelector("#screen-endowment").object3D.visible = false;
       document.querySelector("#screen-search").object3D.visible = false;
       this.raycasterToggle(".button-menu", 0);
       this.raycasterToggle("#keyboard", 0);
+      this.raycasterToggle("#numpad", 0);
     }
   },
 
@@ -63,6 +80,14 @@ AFRAME.registerComponent("screen-menu", {
           cl[0].children[i].children[1].classList.add("raycastable");
         } else {
           cl[0].children[i].children[1].classList.remove("raycastable");
+        }
+      }
+    } else if (it == "#numpad") {
+      for (var i = 1; i < cl[0].children.length; ++i) {
+        if (st) {
+          cl[0].children[i].classList.add("raycastable");
+        } else {
+          cl[0].children[i].classList.remove("raycastable");
         }
       }
     } else {
