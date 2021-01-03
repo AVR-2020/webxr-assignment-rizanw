@@ -211,10 +211,66 @@
           position="-1.7 2.6 0.2"
           text="value: Notifikasi; color: #000000; width: 6; anchor: left"
         ></a-entity>
-        <a-entity mixin="notif-card" position="0 1.6 0"></a-entity>
-        <a-entity mixin="notif-card" position="0 0.4 0"></a-entity>
-        <a-entity mixin="notif-card" position="0 -0.8 0"></a-entity>
-        <a-entity mixin="notif-card" position="0 -2.0 0"></a-entity>
+        <a-entity mixin="notif-card" position="0 1.6 0">
+          <a-plane
+            class="notif-icon"
+            color="black"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: 5 jam lalu; color: #888; anchor: left; width: 3"
+            position="-0.6 0.2 0.12"
+          ></a-entity>
+          <a-entity
+            text="value: Ini notifikasi lorem ..; color: #333; anchor: left; width: 5"
+            position="-0.6 0 0.12"
+          ></a-entity>
+        </a-entity>
+        <a-entity mixin="notif-card" position="0 0.4 0">
+          <a-plane
+            class="notif-icon"
+            color="black"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: 11 jam lalu; color: #888; anchor: left; width: 3"
+            position="-0.6 0.2 0.12"
+          ></a-entity>
+          <a-entity
+            text="value: lorem ipsum sir ..; color: #333; anchor: left; width: 5"
+            position="-0.6 0 0.12"
+          ></a-entity
+        ></a-entity>
+        <a-entity mixin="notif-card" position="0 -0.8 0">
+          <a-plane
+            class="notif-icon"
+            color="black"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: 2 hari lalu; color: #888; anchor: left; width: 3"
+            position="-0.6 0.2 0.12"
+          ></a-entity>
+          <a-entity
+            text="value: Ini notifikasi lorem ..; color: #333; anchor: left; width: 5"
+            position="-0.6 0 0.12"
+          ></a-entity
+        ></a-entity>
+        <a-entity mixin="notif-card" position="0 -2.0 0">
+          <a-plane
+            class="notif-icon"
+            color="black"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: 3 hari lalu; color: #888; anchor: left; width: 3"
+            position="-0.6 0.2 0.12"
+          ></a-entity>
+          <a-entity
+            text="value: lorem ipsum sir ..; color: #333; anchor: left; width: 5"
+            position="-0.6 0 0.12"
+          ></a-entity
+        ></a-entity>
       </a-entity>
       <a-entity id="screen-news" position="0 2.8 -5">
         <a-entity mixin="news-card" position="-2.2 1.2 0">
@@ -288,7 +344,12 @@
             position="-3.2 0 0.02"
           ></a-text>
         </a-entity>
-        <a-entity id="keyboard" position="-2.5 -0.2 0" scale="10 10 10" a-keyboard>
+        <a-entity
+          id="keyboard"
+          position="-2.5 -0.2 0"
+          scale="10 10 10"
+          a-keyboard
+        >
         </a-entity>
       </a-entity>
       <a-entity id="screen-endowment" position="0 3.45 -5">
@@ -311,11 +372,16 @@
           </a-entity>
           <a-entity mixin="metode-card" position="2.4 1.2 0">
             <a-image
-              src="./assets/img/ewallet.jpg" 
+              src="./assets/img/ewallet.jpg"
               position="0 0.2 0.2"
               scale="1 0.4 0.4"
             ></a-image>
-            <a-text value="e-Wallet" color="black" position="0 -0.2 0.2" align="center"></a-text>
+            <a-text
+              value="e-Wallet"
+              color="black"
+              position="0 -0.2 0.2"
+              align="center"
+            ></a-text>
           </a-entity>
         </a-entity>
         <a-entity
@@ -548,8 +614,18 @@
       document.addEventListener("a-keyboard-update", updateInput);
     </script>
     <script>
-      var screen = document.querySelector("#screen-endowment").visible;
-      console.log(screen);
+      function getRandomColor() {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+      var it = document.querySelectorAll(".notif-icon");
+      for (var i = 0; i < it.length; ++i) {
+        it[i].setAttribute("color", getRandomColor());
+      }
     </script>
   </body>
 </html>
