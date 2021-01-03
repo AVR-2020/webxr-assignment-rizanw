@@ -50,7 +50,7 @@
       <!-- assets! -->
       <a-assets>
         <!-- images -->
-        <img id="skyTexture" src="./assets/360-office-interior.jpeg" />
+        <img id="skyTexture" src="./assets/nyc-360.jpeg" />
         <img id="icon-menu" src="./assets/icons/menu.png" />
         <img id="icon-news" src="./assets/icons/news.png" />
         <img id="icon-search" src="./assets/icons/search.png" />
@@ -78,6 +78,7 @@
           id="iconEndowment"
           src="./assets/3D/iconEndowment.gltf"
         ></a-asset-item>
+        <a-asset-item id="next" src="./assets/3D/next.gltf"></a-asset-item>
 
         <a-mixin
           id="hoverAnimation"
@@ -103,6 +104,11 @@
           id="notif-card"
           geometry="primitive: box; width: 3.4; height: 1; depth: 0.2"
           material="color: white;"
+        ></a-mixin>
+        <a-mixin
+          id="news-card"
+          geometry="primitive: box; height: 2; width: 4; depth: 0.2"
+          material="color: #111"
         ></a-mixin>
 
         <!-- nav mixin -->
@@ -185,6 +191,62 @@
         <a-entity mixin="notif-card" position="0 0.4 0"></a-entity>
         <a-entity mixin="notif-card" position="0 -0.8 0"></a-entity>
         <a-entity mixin="notif-card" position="0 -2.0 0"></a-entity>
+      </a-entity>
+      <a-entity id="screen-news" position="0 2.8 -5">
+        <a-entity mixin="news-card" position="-2.2 1.2 0">
+          <a-image
+            position="0 0.25 0.12"
+            scale="4 1.5 0"
+            src="./assets/img/2.jpg"
+          ></a-image>
+          <a-entity
+            position="-1.95 -0.75 0.1"
+            text="value: Dosen ITS Kenalkan Model Bisnis Guna Pengembangan Marine Tourism; width: 4; anchor: left"
+          ></a-entity>
+        </a-entity>
+        <a-entity mixin="news-card" position="2.2 1.2 0">
+          <a-image
+            position="0 0.25 0.12"
+            scale="4 1.5 0"
+            src="./assets/img/1.jpg"
+          ></a-image>
+          <a-entity
+            position="-1.95 -0.75 0.1"
+            text="value:Mahasiswa ITS Gagas Plastik Ramah Lingkungan Berbahan Kentang; width: 4; anchor: left"
+          ></a-entity>
+        </a-entity>
+        <a-entity mixin="news-card" position="-2.2 -1.2 0">
+          <a-image
+            position="0 0.25 0.12"
+            scale="4 1.5 0"
+            src="./assets/img/3.png"
+          ></a-image>
+          <a-entity
+            position="-1.95 -0.75 0.1"
+            text="value:Kaleidoskop ITS 2020: Merajut Secercah Pelita untuk Indonesia; width: 4; anchor: left"
+          ></a-entity>
+        </a-entity>
+        <a-entity mixin="news-card" position="2.2 -1.2 0">
+          <a-image
+            position="0 0.25 0.12"
+            scale="4 1.5 0"
+            src="./assets/img/4.jpg"
+          ></a-image>
+          <a-entity
+            position="-1.95 -0.75 0.1"
+            text="value: Sekali Lagi! Minecraft Semarakan Wisuda ITS Lewat Arak-arakan; width: 4; anchor: left"
+          ></a-entity>
+        </a-entity>
+        <a-entity id="news-navigation" position="0 -2.8 0">
+          <a-entity
+            gltf-model="#next"
+            rotation="0 0 180"
+            scale="0.2 0.2 0.2"
+            position="0.3 0 0"
+          ></a-entity>
+          <a-entity gltf-model="#next" scale="0.2 0.2 0.2" position="-0.3 0 0">
+          </a-entity>
+        </a-entity>
       </a-entity>
 
       <!-- Navigation Menu! -->
