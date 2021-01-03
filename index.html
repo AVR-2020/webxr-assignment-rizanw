@@ -5,100 +5,727 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>myITS Alumni X</title>
     <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="./utils/anime.min.js"></script>
+    <script src="./utils/aframe-keyboard.min.js"></script>
+    <script src="./components/screens/menu.js"></script>
+    <script src="./components/screens/profile.js"></script>
+    <script src="./components/screens/notification.js"></script>
+    <script src="./components/navigation.js"></script>
+    <script src="./components/numpad.js"></script>
   </head>
   <body>
-    <a-scene>
+    <a-scene
+      cursor="rayOrigin: mouse;"
+      raycaster="objects: .raycastable"
+      gridhelper
+    >
+      <!-- environment! -->
+      <!-- <a-entity environment="preset: forest; dressingAmount: 500"></a-entity> -->
+      <a-sky src="#skyTexture"></a-sky>
+
+      <!-- lighting! -->
+      <a-entity light="type: ambient; color: #BBB"></a-entity>
+      <a-entity
+        light="type: directional; color: #EEE; intensity: 0.6"
+        position="0 -0.4 1"
+      ></a-entity>
+      <a-entity
+        light="type: point; intensity: 0.4; distance: 40; decay: 2"
+        position="0 10 10"
+      ></a-entity>
+
+      <!-- Leser controls -->
+      <a-entity
+        id="leftHand"
+        laser-controls="hand: left"
+        raycaster="objects: .raycastable"
+      ></a-entity>
+      <a-entity
+        id="rightHand"
+        laser-controls="hand: right"
+        raycaster="objects: .raycastable"
+        line="color: #118A7E"
+      ></a-entity>
+
       <!-- assets! -->
       <a-assets>
-        <img id="skyTexture" src="./assets/nyc-360.jpeg" />
+        <!-- images -->
+        <img id="skyTexture" src="./assets/360-view-pier.jpeg" />
         <img id="icon-menu" src="./assets/icons/menu.png" />
         <img id="icon-news" src="./assets/icons/news.png" />
         <img id="icon-search" src="./assets/icons/search.png" />
         <img id="icon-notif" src="./assets/icons/notification.png" />
         <img id="icon-profile" src="./assets/icons/profile.png" />
-        <img
-          id="groundTexture"
-          src="https://cdn.aframe.io/a-painter/images/floor.jpg"
-          crossorigin="anonymous"
-        />
-        <a-mixin
-          id="icon-animation"
-          geometry="primitive: ring; radiusInner: 0.5; radiusOuter: 0.8;"
-          material="color: #fff; opacity: 0.5"
-          animation="property: geometry.radiusOuter; from: 0.8; to: 1.2; dur: 1000; easing: easeInOutSine; dir:alternate; loop: true;"
-        >
-        </a-mixin>
-      </a-assets>
 
+        <!-- 3D objects -->
+        <a-asset-item id="close" src="./assets/3D/close.gltf"></a-asset-item>
+        <a-asset-item
+          id="closeBlue"
+          src="./assets/3D/closeBlue.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="navigation-bar"
+          src="./assets/3D/navBar.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="buttonRec"
+          src="./assets/3D/buttonRec.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="buttonRecBlue"
+          src="./assets/3D/buttonRecBlue.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="iconNews"
+          src="./assets/3D/iconNews.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="iconSearch"
+          src="./assets/3D/iconSearch.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="iconEndowment"
+          src="./assets/3D/iconEndowment.gltf"
+        ></a-asset-item>
+        <a-asset-item id="next" src="./assets/3D/next.gltf"></a-asset-item>
+        <a-asset-item
+          id="spotlight"
+          src="./assets/3D/spotlight.gltf"
+        ></a-asset-item>
+
+        <a-mixin
+          id="hoverAnimation"
+          animation="property: object3D.position.y; from: 1.6; to: 1.8; dir: alternate; loop: true; dur: 2000; easing: easeInOutCubic; pauseEvents: touched"
+        ></a-mixin>
+        <a-mixin
+          id="selectAnimation"
+          animation="property: object3D.rotation.y; from: 0; to: 90; dir: alternate; loop: true; dur: 3000; easing: easeInOutCubic; pauseEvents: touched"
+        ></a-mixin>
+
+        <a-mixin
+          id="icon"
+          geometry="primitive: plane; height: 1.0; width: 1.0"
+          color="white"
+          material="color: white;"
+        ></a-mixin>
+        <a-mixin
+          id="side-screen"
+          geometry="primitive: box; width: 4; height: 5; depth: 0.4"
+          material="color: white;"
+        ></a-mixin>
+        <a-mixin
+          id="notif-card"
+          geometry="primitive: box; width: 3.4; height: 1; depth: 0.2"
+          material="color: white;"
+        ></a-mixin>
+        <a-mixin
+          id="news-card"
+          geometry="primitive: box; height: 2; width: 4; depth: 0.2"
+          material="color: #111"
+        ></a-mixin>
+        <a-mixin
+          id="metode-card"
+          geometry="primitive: box; height: 1.2; width: 2.2; depth: 0.2"
+          material="color: #fff"
+        ></a-mixin>
+
+        <!-- nav mixin -->
+        <a-mixin
+          id="close-button"
+          gltf-model="#close"
+          scale="0.14 0.14 0.14"
+        ></a-mixin>
+        <a-mixin
+          id="close-button-blue"
+          gltf-model="#closeBlue"
+          scale="0.14 0.14 0.14"
+        ></a-mixin>
+        <a-mixin
+          id="num-button"
+          gltf-model="#buttonRec"
+          rotation="90 0 0"
+          scale="0.4 0.4 0.4"
+        ></a-mixin>
+        <a-mixin
+          id="nav-button"
+          gltf-model="#buttonRec"
+          rotation="0 90 0"
+        ></a-mixin>
+        <a-mixin
+          id="nav-indicator"
+          geometry="primitive: box; height:0.1; width:1.6; depth: 0.1"
+          material="color: #013880"
+          position="0 0.026 -1.366"
+        ></a-mixin>
+      </a-assets>
+      <!-- EOF assets! -->
+
+      <!-- Screens! -->
+      <a-entity id="screen-menu" position="0 2.8 -5" screen-menu>
+        <a-entity
+          id="menu-news"
+          mixin="hoverAnimation"
+          class="button-menu"
+          gltf-model="#iconNews"
+          rotation="90 45 45"
+          position="-3 1 0"
+        ></a-entity>
+        <a-entity
+          id="menu-endowment"
+          mixin="hoverAnimation"
+          class="button-menu"
+          gltf-model="#iconEndowment"
+          rotation="90 45 45"
+          position="0 1 0"
+        ></a-entity>
+        <a-entity
+          id="menu-search"
+          mixin="hoverAnimation"
+          class="button-menu"
+          gltf-model="#iconSearch"
+          rotation="90 45 45"
+          position="3 1 0"
+        ></a-entity>
+      </a-entity>
       <a-entity
-        geometry="width: 2.5; height: 0.5; depth: 0.01"
-        material="color:#FFFFFF"
-        rotation="100 0 0"
-        position="0 -1 -3.2"
-        id="mainMenu"
+        id="screen-profile"
+        gltf-model="./assets/3D/profile-screen.gltf"
+        rotation="0 -60 0"
+        position="5.5 2.5 -1.8"
+        profile
       >
-        <a-entity mixin="icon-animation">
+        <a-entity
+          geometry="primitive: cylinder; height: 0.2; radius: 0.6"
+          position="-1.5 2.5 0.05"
+          rotation="90 0 0"
+          material="color: #262626"
+          scale="1.2 1.2 1.2"
+        >
+          <a-gltf-model
+            scale="0.12 0.12 0.12"
+            rotation="-85 -35 35"
+            position="0 0 0.6"
+            src="./assets/3D/DeathTrooper.gltf"
+            gltf-model="./assets/3D/DeathTrooper.gltf"
+          ></a-gltf-model> </a-entity
+        ><a-entity
+          position="-0.6 2.6 0.2"
+          text="value: Rizky Andre Wibisono; color: #000000; width: 5; anchor: left"
+        ></a-entity>
+        <a-entity
+          position="-0.6 2.3 0.2"
+          text="value: Teknik Informatika-2017; color: #000000; width: 3; anchor: left"
+        ></a-entity>
+        <a-entity
+          class="button-profile raycastable"
+          animation__mouseenter="property: position; to: 0 1.1 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 1.1 0; startEvents: mouseleave; dur: 500"
+          mixin="notif-card"
+          position="0 1.1 0"
+        >
+          <a-plane
+            material="src: ./assets/icons/edit.png"
+            scale="0.6 0.6 0.6"
+            position="-1.200 0 0.12"
+          ></a-plane>
           <a-entity
-            geometry="depth: 0.010; height: 0.3; width: 0.3"
-            material="src: #icon-menu;"
-            position="-0.950 -0.002 -0.009"
+            text="value: Ubah Profile; color: #333; anchor: left; width: 5"
+            position="-0.8 0 0.12"
           ></a-entity>
         </a-entity>
-        <a-entity id="group-button-middle" position="-0.450 -0.002 -0.009">
-          <a-entity mixin="icon-animation">
-            <a-entity
-              geometry="depth: 0.010; height: 0.3; width: 0.3"
-              material="src: #icon-news;"
-              position="0 0 0"
-            ></a-entity>
-          </a-entity>
-          <a-entity mixin="icon-animation">
-            <a-entity
-              geometry="depth: 0.010; height: 0.3; width: 0.3"
-              material="src: #icon-search;"
-              position="0.45 0 0"
-            ></a-entity>
-          </a-entity>
+        <a-entity
+          class="button-profile raycastable"
+          animation__mouseenter="property: position; to: 0 -0.1 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 -0.1 0; startEvents: mouseleave; dur: 500"
+          mixin="notif-card"
+          position="0 -0.1 0"
+        >
+          <a-plane
+            material="src: ./assets/icons/gear.png"
+            scale="0.6 0.6 0.6"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: Pengaturan; color: #333; anchor: left; width: 5"
+            position="-0.8 0 0.12"
+          ></a-entity>
         </a-entity>
-        <a-entity id="group-button-right" position="0.500 -0.002 -0.009">
-          <a-entity mixin="icon-animation">
-            <a-entity
-              geometry="depth: 0.010; height: 0.3; width: 0.3"
-              material="src: #icon-notif;"
-              position="0 0 0"
-            ></a-entity>
-          </a-entity>
-          <a-entity mixin="icon-animation">
-            <a-entity
-              geometry="depth: 0.010; height: 0.3; width: 0.3"
-              material="src: #icon-profile;"
-              position="0.45 0 0"
-            ></a-entity>
+        <a-entity
+          class="button-profile raycastable"
+          animation__mouseenter="property: position; to: 0 -2.1 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 -2.1 0; startEvents: mouseleave; dur: 500"
+          mixin="notif-card"
+          position="0 -2.1 0"
+        >
+          <a-plane
+            material="src: ./assets/icons/logout.png"
+            scale="0.6 0.6 0.6"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: Keluar; color: #333; anchor: left; width: 5"
+            position="-0.8 0 0.12"
+          ></a-entity
+        ></a-entity>
+      </a-entity>
+      <a-entity
+        id="screen-notif"
+        gltf-model="./assets/3D/notif-screen.gltf"
+        position="-5.5 2.5 -1.8"
+        rotation="0 60 0"
+        notification
+        ><a-entity
+          position="-1.7 2.6 0.2"
+          text="value: Notifikasi; color: #000000; width: 6; anchor: left"
+        ></a-entity>
+        <a-entity
+          mixin="notif-card"
+          class="button-notif"
+          animation__mouseenter="property: position; to: 0 1.6 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 1.6 0; startEvents: mouseleave; dur: 500"
+          position="0 1.6 0"
+        >
+          <a-plane
+            class="notif-icon"
+            color="black"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: 5 jam lalu; color: #888; anchor: left; width: 3"
+            position="-0.6 0.2 0.12"
+          ></a-entity>
+          <a-entity
+            text="value: Ini notifikasi lorem ..; color: #333; anchor: left; width: 5"
+            position="-0.6 0 0.12"
+          ></a-entity>
+          <a-entity mixin="close-button" position="1.53 0.32 0.11"></a-entity>
+        </a-entity>
+        <a-entity
+          mixin="notif-card"
+          class="button-notif"
+          animation__mouseenter="property: position; to: 0 0.4 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 0.4 0; startEvents: mouseleave; dur: 500"
+          position="0 0.4 0"
+        >
+          <a-plane
+            class="notif-icon"
+            color="black"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: 11 jam lalu; color: #888; anchor: left; width: 3"
+            position="-0.6 0.2 0.12"
+          ></a-entity>
+          <a-entity
+            text="value: lorem ipsum sir ..; color: #333; anchor: left; width: 5"
+            position="-0.6 0 0.12"
+          ></a-entity>
+          <a-entity mixin="close-button" position="1.53 0.32 0.11"></a-entity>
+        </a-entity>
+        <a-entity
+          mixin="notif-card"
+          class="button-notif"
+          animation__mouseenter="property: position; to: 0 -0.8 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 -0.8 0; startEvents: mouseleave; dur: 500"
+          position="0 -0.8 0"
+        >
+          <a-plane
+            class="notif-icon"
+            class="button-notif"
+            color="black"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: 2 hari lalu; color: #888; anchor: left; width: 3"
+            position="-0.6 0.2 0.12"
+          ></a-entity>
+          <a-entity
+            text="value: Ini notifikasi lorem ..; color: #333; anchor: left; width: 5"
+            position="-0.6 0 0.12"
+          ></a-entity>
+          <a-entity mixin="close-button" position="1.53 0.32 0.11"></a-entity>
+        </a-entity>
+        <a-entity
+          mixin="notif-card"
+          class="button-notif"
+          animation__mouseenter="property: position; to: 0 -2.0 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 -2.0 0; startEvents: mouseleave; dur: 500"
+          position="0 -2.0 0"
+        >
+          <a-plane
+            class="notif-icon"
+            color="black"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: 3 hari lalu; color: #888; anchor: left; width: 3"
+            position="-0.6 0.2 0.12"
+          ></a-entity>
+          <a-entity
+            text="value: lorem ipsum sir ..; color: #333; anchor: left; width: 5"
+            position="-0.6 0 0.12"
+          ></a-entity>
+          <a-entity mixin="close-button" position="1.53 0.32 0.11"></a-entity>
+        </a-entity>
+      </a-entity>
+      <a-entity id="screen-news" position="0 2.8 -5">
+        <a-entity mixin="news-card" position="-2.2 1.2 0">
+          <a-image
+            position="0 0.25 0.12"
+            scale="4 1.5 0"
+            src="./assets/img/2.jpg"
+          ></a-image>
+          <a-entity
+            position="-1.95 -0.75 0.1"
+            text="value: Dosen ITS Kenalkan Model Bisnis Guna Pengembangan Marine Tourism; width: 4; anchor: left"
+          ></a-entity>
+        </a-entity>
+        <a-entity mixin="news-card" position="2.2 1.2 0">
+          <a-image
+            position="0 0.25 0.12"
+            scale="4 1.5 0"
+            src="./assets/img/1.jpg"
+          ></a-image>
+          <a-entity
+            position="-1.95 -0.75 0.1"
+            text="value:Mahasiswa ITS Gagas Plastik Ramah Lingkungan Berbahan Kentang; width: 4; anchor: left"
+          ></a-entity>
+        </a-entity>
+        <a-entity mixin="news-card" position="-2.2 -1.2 0">
+          <a-image
+            position="0 0.25 0.12"
+            scale="4 1.5 0"
+            src="./assets/img/3.png"
+          ></a-image>
+          <a-entity
+            position="-1.95 -0.75 0.1"
+            text="value:Kaleidoskop ITS 2020: Merajut Secercah Pelita untuk Indonesia; width: 4; anchor: left"
+          ></a-entity>
+        </a-entity>
+        <a-entity mixin="news-card" position="2.2 -1.2 0">
+          <a-image
+            position="0 0.25 0.12"
+            scale="4 1.5 0"
+            src="./assets/img/4.jpg"
+          ></a-image>
+          <a-entity
+            position="-1.95 -0.75 0.1"
+            text="value: Sekali Lagi! Minecraft Semarakan Wisuda ITS Lewat Arak-arakan; width: 4; anchor: left"
+          ></a-entity>
+        </a-entity>
+        <a-entity id="news-navigation" position="0 -2.8 0">
+          <a-entity
+            gltf-model="#next"
+            rotation="0 0 180"
+            scale="0.2 0.2 0.2"
+            position="0.3 0 0"
+          ></a-entity>
+          <a-entity gltf-model="#next" scale="0.2 0.2 0.2" position="-0.3 0 0">
           </a-entity>
         </a-entity>
       </a-entity>
-
-      <!-- environment! -->
-      <!-- <a-entity environment="preset: forest; dressingAmount: 500"></a-entity> -->
-      <a-sky src="#skyTexture"></a-sky>
-
-      <!-- controll! -->
-      <a-entity id="camera" position="0 1.6 0" camera look-controls>
+      <a-entity id="screen-search" position="0 2.8 -5">
+        <a-entity gltf-model="#spotlight" position="0 1.5 0">
+          <a-entity
+            mixin="icon"
+            material="src: #icon-search; alphaTest: 0.5"
+            position="-3.78 -0.02 0.22"
+            scale="0.6 0.6 0.6"
+          ></a-entity>
+          <a-entity text="value: Cari ...; width: 12; anchor: left"></a-entity>
+          <a-text
+            id="input"
+            value="Cari ..."
+            scale="4 4 4"
+            position="-3.2 0 0.02"
+          ></a-text>
+        </a-entity>
         <a-entity
-          cursor="fuse: true; fuseTimeout: 500"
-          position="0 0 -1"
-          geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-          material="color: black; shader: flat"
+          id="keyboard"
+          position="-2.5 -0.2 0"
+          scale="10 10 10"
+          a-keyboard
         >
         </a-entity>
       </a-entity>
-      <!-- Leser controls -->
-      <a-entity laser-controls="hand:right"></a-entity>
-      <a-entity laser-controls="hand:left"></a-entity>
-      <!-- Hand tracking controls -->
-      <a-entity id="leftHand" hand-tracking-controls="hand: left;"></a-entity>
-      <a-entity id="rightHand" hand-tracking-controls="hand: right;"></a-entity>
+      <a-entity id="screen-endowment" position="0 3.45 -5">
+        <a-entity id="metode">
+          <a-entity mixin="metode-card" position="-2.4 1.2 0">
+            <a-image
+              src="./assets/img/bank-transfer.png"
+              position="0 0 0.2"
+              scale="2 1 1"
+            ></a-image>
+          </a-entity>
+          <a-entity mixin="metode-card" position="0 1.2 0">
+            <a-image
+              src="./assets/img/virtual-account.png"
+              material=""
+              geometry=""
+              position="0 0 0.2"
+              scale="1.8 0.8 0.8"
+            ></a-image>
+          </a-entity>
+          <a-entity mixin="metode-card" position="2.4 1.2 0">
+            <a-image
+              src="./assets/img/ewallet.jpg"
+              position="0 0.2 0.2"
+              scale="1 0.4 0.4"
+            ></a-image>
+            <a-text
+              value="e-Wallet"
+              color="black"
+              position="0 -0.2 0.2"
+              align="center"
+            ></a-text>
+          </a-entity>
+        </a-entity>
+        <a-entity
+          id="fund"
+          geometry="primitive: box; height: 1.2; width: 4; depth: 0.2"
+          position="-1.5 -0.2 0"
+        >
+          <a-text
+            anchor="left"
+            color="#000"
+            width="10"
+            position="-1.8 0 0.2"
+            value="Rp "
+          ></a-text>
+          <a-text
+            id="input-numpad"
+            color="#000"
+            width="10"
+            position="-1.2 0 0.2"
+            value="0"
+          ></a-text>
+        </a-entity>
+        <a-entity
+          gltf-model="#buttonRecBlue"
+          scale="1 0.4 0.4"
+          position="-0.5 -1.4 0"
+        >
+          <a-text
+            value="Donasi"
+            width="8"
+            position="0 0 0.26"
+            align="center"
+            scale="1 2 1"
+          ></a-text>
+        </a-entity>
+        <a-entity id="numpad" position="1.1 0 0" numpad>
+          <a-entity mixin="num-button" id="num-7">
+            <a-entity
+              text="value: 7; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="1 0 0" id="num-8">
+            <a-entity
+              text="value: 8; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="2 0 0" id="num-9">
+            <a-entity
+              text="value: 9; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="0 -1 0" id="num-4">
+            <a-entity
+              text="value: 4; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="1 -1 0" id="num-5">
+            <a-entity
+              text="value: 5; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="2 -1 0" id="num-6">
+            <a-entity
+              text="value: 6; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="0 -2 0" id="num-1">
+            <a-entity
+              text="value: 1; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="1 -2 0" id="num-2">
+            <a-entity
+              text="value: 2; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="2 -2 0" id="num-3">
+            <a-entity
+              text="value: 3; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity
+            mixin="num-button"
+            position="0.55 -3 0"
+            scale="0.85 0.4 0.4"
+            id="num-0"
+          >
+            <a-entity
+              text="value: 0; width: 16; color: black; anchor: left"
+              scale="0.6 1 1"
+              rotation="-90 0 0"
+              position="-0.184 0.26 0"
+            ></a-entity>
+          </a-entity>
+          <a-entity mixin="num-button" position="2 -3 0" id="num-del">
+            <a-entity
+              text="value: del; width: 16; color: black; anchor: left"
+              rotation="-90 0 0"
+              position="-0.26 0.26 0"
+            ></a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!-- Navigation Menu! -->
+      <a-entity
+        gltf-model="#navigation-bar"
+        position="0 -0.25 -2.50"
+        rotation="0 90 45"
+        scale="0.3 0.3 0.3"
+        navigation
+      >
+        <a-entity
+          id="menu"
+          mixin="nav-button"
+          class="button-nav raycastable"
+          position="0.070 0.170 0"
+        >
+          <a-entity
+            mixin="icon"
+            material="src: #icon-menu; alphaTest: 0.5"
+            rotation="-90 -35 215"
+            position="-0.048 0.260 0"
+          ></a-entity>
+          <a-entity mixin="nav-indicator"></a-entity>
+        </a-entity>
+        <a-entity
+          id="notif"
+          mixin="nav-button"
+          class="button-nav raycastable"
+          position="0.070 0.170 3"
+        >
+          <a-entity
+            mixin="icon"
+            material="src: #icon-notif; alphaTest: 0.5"
+            rotation="-90 -35 215"
+            position="-0.048 0.260 0"
+          ></a-entity>
+          <a-entity mixin="nav-indicator"></a-entity>
+        </a-entity>
+        <a-entity
+          id="profile"
+          mixin="nav-button"
+          class="button-nav raycastable"
+          position="0.070 0.170 5.5"
+        >
+          <a-entity
+            mixin="icon"
+            material="src: #icon-profile; alphaTest: 0.5"
+            rotation="-90 -35 215"
+            position="-0.048 0.260 0"
+          ></a-entity>
+          <a-entity mixin="nav-indicator"></a-entity>
+        </a-entity>
+        <a-entity
+          id="news"
+          mixin="nav-button"
+          class="button-nav raycastable"
+          position="0.070 0.170 -3"
+        >
+          <a-entity
+            mixin="icon"
+            material="src: #icon-news; alphaTest: 0.5"
+            rotation="-90 -35 215"
+            position="-0.048 0.260 0"
+          ></a-entity>
+          <a-entity mixin="nav-indicator"></a-entity>
+        </a-entity>
+        <a-entity
+          id="search"
+          mixin="nav-button"
+          class="button-nav raycastable"
+          position="0.070 0.170 -5.5"
+        >
+          <a-entity
+            mixin="icon"
+            material="src: #icon-search; alphaTest: 0.5"
+            rotation="-90 -35 215"
+            position="-0.048 0.260 0"
+          ></a-entity>
+          <a-entity mixin="nav-indicator"></a-entity>
+        </a-entity>
+      </a-entity>
     </a-scene>
+
+    <!-- spotlight keyboard handler -->
+    <!-- cr: https://github.com/WandererOU/aframe-keyboard -->
+    <script>
+      var input = "";
+      function updateInput(e) {
+        var code = parseInt(e.detail.code);
+        switch (code) {
+          case 8:
+            input = input.slice(0, -1);
+            break;
+          case 06:
+            alert("coming soon...");
+            var keyboard = document.querySelector("#keyboard");
+            document.querySelector("#input").setAttribute("value", input);
+            return;
+          case 13:
+            alert("coming soon...");
+            var keyboard = document.querySelector("#keyboard");
+            document.querySelector("#input").setAttribute("value", input);
+            return;
+          default:
+            input = input + e.detail.value;
+            break;
+        }
+        document.querySelector("#input").setAttribute("value", input + "_");
+      }
+      document.addEventListener("a-keyboard-update", updateInput);
+    </script>
+    <script>
+      function getRandomColor() {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+      var it = document.querySelectorAll(".notif-icon");
+      for (var i = 0; i < it.length; ++i) {
+        it[i].setAttribute("color", getRandomColor());
+      }
+    </script>
   </body>
 </html>
