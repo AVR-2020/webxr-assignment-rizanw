@@ -18,6 +18,7 @@ AFRAME.registerComponent("navigation", {
     document.querySelector("#screen-profile").object3D.visible = false;
     document.querySelector("#screen-notif").object3D.visible = false;
     document.querySelector("#screen-news").object3D.visible = false;
+    document.querySelector("#screen-search").object3D.visible = false;
   },
 
   onClick: function (evt) {
@@ -88,16 +89,19 @@ AFRAME.registerComponent("navigation", {
       document.querySelector("#screen-notif").object3D.visible = false;
     } else {
       if (selectedMenu == "menu" && isClicked) {
+        document.querySelector("#screen-search").object3D.visible = false;
         document.querySelector("#screen-menu").object3D.visible = true;
         document.querySelector("#screen-news").object3D.visible = false;
         this.raycasterToggle(".button-menu", "raycastable");
       } else if (selectedMenu == "news" && isClicked) {
+        document.querySelector("#screen-search").object3D.visible = false;
         document.querySelector("#screen-menu").object3D.visible = false;
         this.raycasterToggle(".button-menu", "raycastable");
         document.querySelector("#screen-news").object3D.visible = true;
       } else if (selectedMenu == "search" && isClicked) {
         document.querySelector("#screen-menu").object3D.visible = false;
         document.querySelector("#screen-news").object3D.visible = false;
+        document.querySelector("#screen-search").object3D.visible = true;
         this.raycasterToggle(".button-menu", "raycastable");
       } else {
         document.querySelector("#screen-menu").object3D.visible = false;

@@ -10,6 +10,7 @@
     <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="./utils/anime.min.js"></script>
+    <script src="./utils/aframe-keyboard.min.js"></script>
     <script src="./components/navigation.js"></script>
     <script src="./components/screens/menu.js"></script>
   </head>
@@ -50,7 +51,7 @@
       <!-- assets! -->
       <a-assets>
         <!-- images -->
-        <img id="skyTexture" src="./assets/nyc-360.jpeg" />
+        <img id="skyTexture" src="./assets/360-view-pier.jpeg" />
         <img id="icon-menu" src="./assets/icons/menu.png" />
         <img id="icon-news" src="./assets/icons/news.png" />
         <img id="icon-search" src="./assets/icons/search.png" />
@@ -79,6 +80,10 @@
           src="./assets/3D/iconEndowment.gltf"
         ></a-asset-item>
         <a-asset-item id="next" src="./assets/3D/next.gltf"></a-asset-item>
+        <a-asset-item
+          id="spotlight"
+          src="./assets/3D/spotlight.gltf"
+        ></a-asset-item>
 
         <a-mixin
           id="hoverAnimation"
@@ -248,6 +253,25 @@
           </a-entity>
         </a-entity>
       </a-entity>
+      <a-entity id="screen-search" position="0 2.8 -5">
+        <a-entity gltf-model="#spotlight" position="0 1 0">
+          <a-entity
+            mixin="icon"
+            material="src: #icon-search; alphaTest: 0.5"
+            position="-3.78 -0.02 0.22"
+            scale="0.6 0.6 0.6"
+          ></a-entity>
+          <a-entity text="value: Cari ...; width: 12; anchor: left"></a-entity>
+          <a-text
+            id="input"
+            value="Cari ..."
+            scale="4 4 4"
+            position="-3.2 0 0.02"
+          ></a-text>
+        </a-entity>
+        <a-entity id="keyboard" position="-2 -1 0" scale="10 10 10" a-keyboard>
+        </a-entity>
+      </a-entity>
 
       <!-- Navigation Menu! -->
       <a-entity
@@ -329,5 +353,34 @@
         </a-entity>
       </a-entity>
     </a-scene>
+
+    <!-- spotlight keyboard handler -->
+    <!-- cr: https://github.com/WandererOU/aframe-keyboard -->
+    <script>
+      var input = "";
+      function updateInput(e) {
+        var code = parseInt(e.detail.code);
+        switch (code) {
+          case 8:
+            input = input.slice(0, -1);
+            break;
+          case 06:
+            alert("coming soon...");
+            var keyboard = document.querySelector("#keyboard");
+            document.querySelector("#input").setAttribute("value", input);
+            return;
+          case 13:
+            alert("coming soon...");
+            var keyboard = document.querySelector("#keyboard");
+            document.querySelector("#input").setAttribute("value", input);
+            return;
+          default:
+            input = input + e.detail.value;
+            break;
+        }
+        document.querySelector("#input").setAttribute("value", input + "_");
+      }
+      document.addEventListener("a-keyboard-update", updateInput);
+    </script>
   </body>
 </html>
