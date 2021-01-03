@@ -12,6 +12,7 @@
     <script src="./utils/anime.min.js"></script>
     <script src="./utils/aframe-keyboard.min.js"></script>
     <script src="./components/screens/menu.js"></script>
+    <script src="./components/screens/profile.js"></script>
     <script src="./components/navigation.js"></script>
     <script src="./components/numpad.js"></script>
   </head>
@@ -176,30 +177,83 @@
       </a-entity>
       <a-entity
         id="screen-profile"
-        mixin="side-screen"
+        gltf-model="./assets/3D/profile-screen.gltf"
         rotation="0 -60 0"
         position="5.5 2.5 -1.8"
-        ><a-entity
+        profile
+      >
+        <a-entity
           geometry="primitive: cylinder; height: 0.2; radius: 0.6"
-          position="-1.5 2.0 0.3"
+          position="-1.5 2.5 0.05"
           rotation="90 0 0"
           material="color: #262626"
+          scale="1.2 1.2 1.2"
         >
           <a-gltf-model
-            scale="0.1 0.1 0.1"
+            scale="0.12 0.12 0.12"
             rotation="-85 -35 35"
-            position="0 0 0.60"
+            position="0 0 0.6"
             src="./assets/3D/DeathTrooper.gltf"
             gltf-model="./assets/3D/DeathTrooper.gltf"
-          ></a-gltf-model>
-        </a-entity>
-        <a-entity
-          position="-0.7 2.2 0.2"
+          ></a-gltf-model> </a-entity
+        ><a-entity
+          position="-0.6 2.6 0.2"
           text="value: Rizky Andre Wibisono; color: #000000; width: 5; anchor: left"
         ></a-entity>
         <a-entity
-          position="-0.7 1.9 0.2"
+          position="-0.6 2.3 0.2"
           text="value: Teknik Informatika-2017; color: #000000; width: 3; anchor: left"
+        ></a-entity>
+        <a-entity
+          class="button-profile raycastable"
+          animation__mouseenter="property: position; to: 0 1.1 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 1.1 0; startEvents: mouseleave; dur: 500"
+          mixin="notif-card"
+          position="0 1.1 0"
+        >
+          <a-plane
+            material="src: ./assets/icons/edit.png"
+            scale="0.6 0.6 0.6"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: Ubah Profile; color: #333; anchor: left; width: 5"
+            position="-0.8 0 0.12"
+          ></a-entity>
+        </a-entity>
+        <a-entity
+          class="button-profile raycastable"
+          animation__mouseenter="property: position; to: 0 -0.1 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 -0.1 0; startEvents: mouseleave; dur: 500"
+          mixin="notif-card"
+          position="0 -0.1 0"
+        >
+          <a-plane
+            material="src: ./assets/icons/gear.png"
+            scale="0.6 0.6 0.6"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: Pengaturan; color: #333; anchor: left; width: 5"
+            position="-0.8 0 0.12"
+          ></a-entity>
+        </a-entity>
+        <a-entity
+          class="button-profile raycastable"
+          animation__mouseenter="property: position; to: 0 -2.1 0.4; startEvents: mouseenter; dur: 500"
+          animation__mouseleave="property: position; to: 0 -2.1 0; startEvents: mouseleave; dur: 500"
+          mixin="notif-card"
+          position="0 -2.1 0"
+        >
+          <a-plane
+            material="src: ./assets/icons/logout.png"
+            scale="0.6 0.6 0.6"
+            position="-1.200 0 0.12"
+          ></a-plane>
+          <a-entity
+            text="value: Keluar; color: #333; anchor: left; width: 5"
+            position="-0.8 0 0.12"
+          ></a-entity
         ></a-entity>
       </a-entity>
       <a-entity
