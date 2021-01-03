@@ -83,7 +83,7 @@ AFRAME.registerComponent("screen-menu", {
         }
       }
     } else if (it == "#numpad") {
-      for (var i = 1; i < cl[0].children.length; ++i) {
+      for (var i = 0; i < cl[0].children.length; ++i) {
         if (st) {
           cl[0].children[i].classList.add("raycastable");
         } else {

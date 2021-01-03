@@ -22,6 +22,7 @@ AFRAME.registerComponent("navigation", {
     document.querySelector("#screen-endowment").object3D.visible = false;
     this.raycasterToggle("#keyboard", 0);
     this.raycasterToggle("#numpad", 0);
+    this.raycasterToggle(".button-profile", 0);
   },
 
   onClick: function (evt) {
@@ -84,12 +85,16 @@ AFRAME.registerComponent("navigation", {
     var selectedMenu = evt.target.id;
     if (selectedMenu == "profile" && isClicked) {
       document.querySelector("#screen-profile").object3D.visible = true;
+      this.raycasterToggle(".button-profile", 1); 
     } else if (selectedMenu == "profile" && !isClicked) {
       document.querySelector("#screen-profile").object3D.visible = false;
+      this.raycasterToggle(".button-profile", 0); 
     } else if (selectedMenu == "notif" && isClicked) {
-      document.querySelector("#screen-notif").object3D.visible = true;
+      document.querySelector("#screen-notif").object3D.visible = true; 
+      this.raycasterToggle(".button-notif", 1);
     } else if (selectedMenu == "notif" && !isClicked) {
-      document.querySelector("#screen-notif").object3D.visible = false;
+      document.querySelector("#screen-notif").object3D.visible = false; 
+      this.raycasterToggle(".button-notif", 0);
     } else {
       if (selectedMenu == "menu" && isClicked) {
         document.querySelector("#screen-news").object3D.visible = false;
