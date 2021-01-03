@@ -19,6 +19,61 @@ AFRAME.registerComponent("screen-menu", {
   onClick: function (evt) {
     evt.target.pause();
     this.el.addState("clicked");
+
+    // reset icon
+    evt.target.object3D.scale.set(1.0, 1.0, 1.0);
+    evt.target.setAttribute("rotation", "90 45 45");
+    evt.target.setAttribute("mixin", "hoverAnimation");
+
+    // var isClicked = btnIndicator == "#013880" ? true : false;
+
+    var selectedMenu = evt.target.id;
+    if (selectedMenu == "menu-news") {
+      document.querySelector("#screen-menu").object3D.visible = false;
+      document.querySelector("#screen-news").object3D.visible = true;
+      document.querySelector("#screen-search").object3D.visible = false;
+      this.raycasterToggle(".button-menu", 1);
+      this.raycasterToggle("#keyboard", 0);
+    } else if (selectedMenu == "menu-endowment") {
+      document.querySelector("#screen-menu").object3D.visible = false;
+      document.querySelector("#screen-news").object3D.visible = false;
+      document.querySelector("#screen-search").object3D.visible = false;
+      this.raycasterToggle(".button-menu", 0);
+      this.raycasterToggle("#keyboard", 0);
+    } else if (selectedMenu == "menu-search") {
+      document.querySelector("#screen-menu").object3D.visible = false;
+      document.querySelector("#screen-news").object3D.visible = false;
+      document.querySelector("#screen-search").object3D.visible = true;
+      this.raycasterToggle(".button-menu", 0);
+      this.raycasterToggle("#keyboard", 1);
+    } else {
+      document.querySelector("#screen-menu").object3D.visible = false;
+      document.querySelector("#screen-news").object3D.visible = false;
+      document.querySelector("#screen-search").object3D.visible = false;
+      this.raycasterToggle(".button-menu", 0);
+      this.raycasterToggle("#keyboard", 0);
+    }
+  },
+
+  raycasterToggle: function (it, st) {
+    cl = document.querySelectorAll(it);
+    if (it == "#keyboard") {
+      for (var i = 1; i < cl[0].children.length; ++i) {
+        if (st) {
+          cl[0].children[i].children[1].classList.add("raycastable");
+        } else {
+          cl[0].children[i].children[1].classList.remove("raycastable");
+        }
+      }
+    } else {
+      for (var i = 0; i < cl.length; ++i) {
+        if (st) {
+          cl[i].classList.add("raycastable");
+        } else {
+          cl[i].classList.remove("raycastable");
+        }
+      }
+    }
   },
 
   onMouseEnter: function (evt) {

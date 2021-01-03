@@ -19,6 +19,7 @@ AFRAME.registerComponent("navigation", {
     document.querySelector("#screen-notif").object3D.visible = false;
     document.querySelector("#screen-news").object3D.visible = false;
     document.querySelector("#screen-search").object3D.visible = false;
+    this.raycasterToggle("#keyboard", 0);
   },
 
   onClick: function (evt) {
@@ -89,32 +90,51 @@ AFRAME.registerComponent("navigation", {
       document.querySelector("#screen-notif").object3D.visible = false;
     } else {
       if (selectedMenu == "menu" && isClicked) {
+        document.querySelector("#screen-news").object3D.visible = false;
         document.querySelector("#screen-search").object3D.visible = false;
         document.querySelector("#screen-menu").object3D.visible = true;
-        document.querySelector("#screen-news").object3D.visible = false;
-        this.raycasterToggle(".button-menu", "raycastable");
+        this.raycasterToggle(".button-menu", 1);
+        this.raycasterToggle("#keyboard", 0);
       } else if (selectedMenu == "news" && isClicked) {
-        document.querySelector("#screen-search").object3D.visible = false;
         document.querySelector("#screen-menu").object3D.visible = false;
-        this.raycasterToggle(".button-menu", "raycastable");
+        document.querySelector("#screen-search").object3D.visible = false;
         document.querySelector("#screen-news").object3D.visible = true;
+        this.raycasterToggle(".button-menu", 0);
+        this.raycasterToggle("#keyboard", 0);
       } else if (selectedMenu == "search" && isClicked) {
         document.querySelector("#screen-menu").object3D.visible = false;
         document.querySelector("#screen-news").object3D.visible = false;
         document.querySelector("#screen-search").object3D.visible = true;
-        this.raycasterToggle(".button-menu", "raycastable");
+        this.raycasterToggle(".button-menu", 0);
+        this.raycasterToggle("#keyboard", 1);
       } else {
         document.querySelector("#screen-menu").object3D.visible = false;
         document.querySelector("#screen-news").object3D.visible = false;
-        this.raycasterToggle(".button-menu", "raycastable");
+        document.querySelector("#screen-search").object3D.visible = false;
+        this.raycasterToggle(".button-menu", 0);
+        this.raycasterToggle("#keyboard", 0);
       }
     }
   },
 
   raycasterToggle: function (it, st) {
     cl = document.querySelectorAll(it);
-    for (var i = 0; i < cl.length; ++i) {
-      cl[i].classList.toggle(st);
+    if (it == "#keyboard") {
+      for (var i = 1; i < cl[0].children.length; ++i) {
+        if (st) {
+          cl[0].children[i].children[1].classList.add("raycastable");
+        } else {
+          cl[0].children[i].children[1].classList.remove("raycastable");
+        }
+      }
+    } else {
+      for (var i = 0; i < cl.length; ++i) {
+        if (st) {
+          cl[i].classList.add("raycastable");
+        } else {
+          cl[i].classList.remove("raycastable");
+        }
+      }
     }
   },
 

@@ -11,8 +11,8 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="./utils/anime.min.js"></script>
     <script src="./utils/aframe-keyboard.min.js"></script>
-    <script src="./components/navigation.js"></script>
     <script src="./components/screens/menu.js"></script>
+    <script src="./components/navigation.js"></script>
   </head>
   <body>
     <a-scene
@@ -134,6 +134,7 @@
       <!-- Screens! -->
       <a-entity id="screen-menu" position="0 2.8 -5" screen-menu>
         <a-entity
+          id="menu-news"
           mixin="hoverAnimation"
           class="button-menu"
           gltf-model="#iconNews"
@@ -141,6 +142,7 @@
           position="-3 1 0"
         ></a-entity>
         <a-entity
+          id="menu-endowment"
           mixin="hoverAnimation"
           class="button-menu"
           gltf-model="#iconEndowment"
@@ -148,6 +150,7 @@
           position="0 1 0"
         ></a-entity>
         <a-entity
+          id="menu-search"
           mixin="hoverAnimation"
           class="button-menu"
           gltf-model="#iconSearch"
